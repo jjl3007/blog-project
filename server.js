@@ -27,9 +27,12 @@ app.get('/', function (req, res) {
     res.redirect('/about');
 });
 
-
+// setup a route to listen on blog and get all the posts who have published == true
+// this route will return a json formatted string whose published property is true
 app.get("/blog", (req, res) => {
-    blogService.getAllPosts().then((posts) => {
+    blogService
+        .getAllPosts()
+        .then((posts) => {
             res.send(posts);
         })
         .catch((err) => {
@@ -38,8 +41,12 @@ app.get("/blog", (req, res) => {
         });
 });
 
+// setup a route to listen on blog and returns all posts within the posts.json file
+// this route will return a json formatted string of all posts
 app.get("/posts", (req, res) => {
-    blogService.getPublishedPosts().then((posts) => {
+    blogService
+        .getPublishedPosts()
+        .then((posts) => {
             res.send(posts);
         })
         .catch((err) => {
@@ -48,6 +55,8 @@ app.get("/posts", (req, res) => {
         });
 });
 
+// setup a route to listen on categories and returns all categories within the posts.json file
+// this route will return a json formatted string of all categories
 app.get("/categories", (req, res) => {
     blogService
         .getCategories()
@@ -58,6 +67,11 @@ app.get("/categories", (req, res) => {
             console.error(err);
             res.send(err);
         });
+});
+
+// no matching route, return error message 404
+app.use(function (req, res) {
+    res.status(404).send("Page not found");
 });
 
 // no matching route, return error message 404
