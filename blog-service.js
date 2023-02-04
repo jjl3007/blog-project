@@ -1,4 +1,4 @@
-// declare 2 global variables, posts and categories, both type array
+
 var posts = [];
 var categories = [];
 
