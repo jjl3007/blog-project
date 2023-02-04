@@ -5,9 +5,9 @@
 * 
 *  Name: Juan Jose Lozano Reyes     Student ID: 165463217   Date: 2023-02-03
 *
-*  Cyclic Web App URL: ________________________________________________________
+*  Cyclic Web App URL: https://dull-rose-tuna-wig.cyclic.app
 *
-*  GitHub Repository URL: ______________________________________________________
+*  GitHub Repository URL: https://github.com/jjl3007/web322-app
 *
 ********************************************************************************/ 
 
