@@ -73,8 +73,3 @@ app.get("/categories", (req, res) => {
 app.use(function (req, res) {
     res.status(404).send("Page not found");
 });
-
-// no matching route, return error message 404
-app.use(function (req, res) {
-    res.status(404).send("Page not found");
-});
