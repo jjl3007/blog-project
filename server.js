@@ -17,8 +17,20 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const blogService = require('./blog-service.js');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const streamifier = require('streamifier');
 
 var port = process.env.PORT || 8080;
+
+cloudinary.config({
+    cloud_name: 'diw2dugzg',
+    api_key: '263662487831944',
+    api_secret: 'bOsOaS3sE1DpEg0jy-EcyQWeHW4',
+    secure: true
+});
+
+const upload = multer(); // no { storage: storage } 
 
 blogService.initialize().then(() => {
         app.listen(8080, () => {
@@ -37,11 +49,59 @@ app.get('/', function (req, res) {
     res.redirect('/about');
 });
 
+app.get('/posts/add', function (req, res) {
+    res.sendFile(path.join(__dirname + '/views/addPost.html'));
+});
+
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/posts/add', upload.single('featureimage'), (req, res) => {
+    if(req.file){
+        let streamUpload = (req) => {
+            return new Promise((resolve, reject) => {
+                let stream = cloudinary.uploader.upload_stream(
+                    (error, result) => {
+                        if (result) {
+                            resolve(result);
+                        } else {
+                            reject(error);
+                        }
+                    }
+                );
+    
+                streamifier.createReadStream(req.file.buffer).pipe(stream);
+            });
+        };
+    
+        async function upload(req) {
+            let result = await streamUpload(req);
+            console.log(result);
+            return result;
+        }
+    
+        upload(req).then((uploaded)=>{
+            processPost(uploaded.url);
+        });
+    }else{
+        processPost("");
+    }
+     
+    function processPost(imageUrl){
+        req.body.featureImage = imageUrl;
+    
+        blogService.addPost(req.body).then((data) => {
+            res.redirect("/blog");
+        }
+        ).catch((err) => {
+            res.status(500).send("Unable to add post");
+        }
+        );
+    } 
+    
+});
 
 app.get("/blog", (req, res) => {
-    blogService
-        .getAllPosts()
-        .then((posts) => {
+    blogService.getAllPosts().then((posts) => {
             res.send(posts);
         })
         .catch((err) => {
@@ -50,22 +110,40 @@ app.get("/blog", (req, res) => {
         });
 });
 
-app.get("/posts", (req, res) => {
-    blogService
-        .getPublishedPosts()
-        .then((posts) => {
-            res.send(posts);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.send(err);
+app.get('/posts', function (req, res) {
+    if (req.query.minDate) {
+      blogService.getPostsByMinDate(req.query.minDate).then((posts) => {
+        res.send(posts);
+      }).catch((err) => {
+        res.status(500).send("Unable to get posts");
+      });
+    } else if (req.query.category) {
+      blogService.getPostsByCategory(req.query.category).then((posts) => {
+        res.send(posts);
+      }).catch((err) => {
+        res.status(500).send("Unable to get posts");
+      });
+    } else if (req.query.id) {
+        blogService.getPostById(req.query.id).then((post) => {
+            res.send(post);
+        }).catch((err) => {
+            res.status(500).send("Unable to get post");
         });
-});
-
+    }
+    else 
+    {
+      blogService.getPublishedPosts().then((posts) => {
+        res.send(posts);
+      }).catch((err) => {
+        console.error(err);
+        res.send(err);
+      });
+    }
+  });
+  
+  
 app.get("/categories", (req, res) => {
-    blogService
-        .getCategories()
-        .then((categories) => {
+    blogService.getCategories().then((categories) => {
             res.send(categories);
         })
         .catch((err) => {

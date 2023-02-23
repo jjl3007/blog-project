@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+<form method="POST" action="/posts/add">
+
+    <h1> Add post </h1>
+    <p>Feature image</p>
+    <label for="featuredImage">Featured Image:</label><br>
+    <input type="file" id="featuredImage" name="featuredImage"><br>
+    <h2>Post Content:</h2>
+
+    <p>Title</p>
+    <input type="text" name="title" id="title">
+    <p>Body</p>
+    <textarea name="body" id="body" cols="30" rows="10"></textarea>
+    <p>Category</p>
+    <select name="category" id="category">
+        <option value=1>Technology</option>
+        <option value=2>Gaming</option>
+        <option value=3>Fashion</option>
+        <option value=4>Education</option>
+        <option value=5>Wellness</option>
+    </select>
+    <p>Visibility</p>
+    <label for="published">Published</label>
+    <input type="checkbox" id="published" name="published">
+
+    <!--button for submission-->
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

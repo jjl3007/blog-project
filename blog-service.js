@@ -55,4 +55,60 @@ const getCategories = () => {
     });
 }
 
-module.exports = { initialize, getAllPosts, getPublishedPosts, getCategories };
+const addPost = (postData) => {
+    return new Promise((resolve, reject) => {
+        if (postData.title === "" || postData.content === "") {
+        reject("unable to create post with missing title or content");
+        } else {
+        postData.id = posts.length + 1;
+        postData.published = false;
+        posts.push(postData);
+        fs.writeFile("./data/posts.json", JSON.stringify(posts), (err) => {
+            if (err) {
+            reject("unable to write to posts.json file");
+            } else {
+            resolve();
+            }
+        });
+        }
+    });
+}
+
+function getPostsByCategory(category) {
+  return new Promise((resolve, reject) => {
+    const filteredPosts = posts.filter(post => post.category == category);
+    if (filteredPosts.length > 0) {
+      resolve(filteredPosts);
+    } else {
+      reject('no results returned');
+    }
+  });
+}
+
+  
+function getPostsByMinDate(minDateStr) {
+  const minDate = new Date(minDateStr);
+  return new Promise((resolve, reject) => {
+    const filteredPosts = posts.filter(post => new Date(post.postDate) >= minDate);
+    if (filteredPosts.length > 0) {
+      resolve(filteredPosts);
+    } else {
+      reject('no results returned');
+    }
+  });
+}
+
+  
+  function getPostById(id) {
+    return new Promise((resolve, reject) => {
+      const post = posts.find(post => post.id == id);
+      if (post) {
+        resolve(post);
+      } else {
+        reject('no result returned');
+      }
+    });
+  }
+
+
+module.exports = { initialize, getAllPosts, getPublishedPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
