@@ -1,9 +1,9 @@
 /*********************************************************************************
-*  WEB322 – Assignment 02
+*  WEB322 – Assignment 03
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Juan Jose Lozano Reyes     Student ID: 165463217   Date: 2023-02-03
+*  Name: Juan Jose Lozano Reyes     Student ID: 165463217   Date: 2023-02-23
 *
 *  Cyclic Web App URL: https://dull-rose-tuna-wig.cyclic.app
 *
