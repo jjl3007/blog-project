@@ -1,0 +1,39 @@
+<div class="container">
+    <form method="POST" action="/posts/add">
+
+        <h1>Add post</h1>
+        <div class="form-group">
+            <label for="featuredImage">Featured Image:</label>
+            <input type="file" class="form-control-file" id="featuredImage" name="featuredImage">
+        </div>
+
+        <h2>Post Content:</h2>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="form-group">
+            <label for="body">Body:</label>
+            <textarea class="form-control" id="body" name="body" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control" id="category" name="category">
+                <option value="1">Technology</option>
+                <option value="2">Gaming</option>
+                <option value="3">Fashion</option>
+                <option value="4">Education</option>
+                <option value="5">Wellness</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="published" name="published">
+                <label class="form-check-label" for="published">
+                    Published
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

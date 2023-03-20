@@ -62,6 +62,14 @@ const addPost = (postData) => {
         } else {
         postData.id = posts.length + 1;
         postData.published = false;
+
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        postData.postDate = `${year}-${month}-${day}`;
+        console.log(postData.postDate);
+
         posts.push(postData);
         fs.writeFile("./data/posts.json", JSON.stringify(posts), (err) => {
             if (err) {
@@ -110,5 +118,16 @@ function getPostsByMinDate(minDateStr) {
     });
   }
 
+  function getPublishedPostsByCategory(category) {
+    return new Promise((resolve, reject) => {
+      const filteredPosts = posts.filter(post => post.category == category && post.published == true);
+      if (filteredPosts.length > 0) {
+        resolve(filteredPosts);
+      } else {
+        reject('no results returned');
+      }
+    });
+    }
 
-module.exports = { initialize, getAllPosts, getPublishedPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
+
+module.exports = { initialize, getAllPosts, getPublishedPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById, getPublishedPostsByCategory };
