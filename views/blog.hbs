@@ -1,5 +1,8 @@
 <div class="row">
     <section class="main col-md-9">
+        {{#unless data.post}}
+        <p>No posts found.</p>
+        {{/unless}}
         {{#with data.post}}
         <article>
             <h2>{{title}}</h2>
