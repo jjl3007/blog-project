@@ -1,0 +1,36 @@
+{{!-- Show error message if available --}}
+{{#if errorMessage}}
+<div class="alert alert-danger">
+  <strong>Error:</strong> {{errorMessage}}
+</div>
+{{/if}}
+
+{{!-- Show success message and "Proceed to Log in" button if available --}}
+{{#if successMessage}}
+<div class="alert alert-success">
+  <strong>Success:</strong> {{successMessage}}
+</div>
+<a class="btn btn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Log in&nbsp;&nbsp;&nbsp;</a>
+<br><br><br>
+{{else}}
+{{!-- Register form --}}
+<form action="/register" method="POST">
+  <div class="form-group">
+    <label for="userName">User Name</label>
+    <input type="text" name="userName" class="form-control" placeholder="User Name" value="{{userName}}" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  </div>
+  <div class="form-group">
+    <label for="password2">Confirm Password</label>
+    <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+{{/if}}
